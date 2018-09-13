@@ -1,0 +1,32 @@
+---
+title: "projet"
+author: "Alan Turpin et Thomas Cusson"
+date: "13 septembre 2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## TP1
+
+Au cours de ce TP, nous réalisons les consignes A présentés ici: <https://github.com/alegrand/SMPE/tree/master/sessions/2018_09_Rennes>.
+
+
+#Réalisez un graphique qui vous montrera une oscillation périodique superposée à une évolution systématique plus lente.
+-> séparer tendance et résiduel
+
+```{r}
+df <- read.csv("weekly_in_situ_co2_mlo.csv", skip=44, header=F)
+#On considère la time serie
+thets = ts(df$V2, frequency = 7, start = c((df$V1)[1]))
+
+
+```
+    
+#Séparez ces deux phénomènes. Caractérisez l’oscillation périodique. Fittez un modèle simple à la contribution lente et tentez une extrapolation jusqu’à 2025.
+-> les résiduels marquent la saisonalité: fitter deux modèles distinct, prédire sur les deux.
+
+
+
