@@ -20,13 +20,26 @@ Au cours de ce TP, nous réalisons les consignes A présentés ici: <https://git
 ```{r}
 df <- read.csv("weekly_in_situ_co2_mlo.csv", skip=44, header=F)
 #On considère la time serie
-thets = ts(df$V2, frequency = 7, start = c((df$V1)[1]))
+thets = ts(df$V2, frequency = 52.178, start = c((df$V1)[1]))
+decomp = decompose(thets, type="additive")
+plot(decomp)
 
-
+#refaire sur les residuels tout ça.
 ```
     
 #Séparez ces deux phénomènes. Caractérisez l’oscillation périodique. Fittez un modèle simple à la contribution lente et tentez une extrapolation jusqu’à 2025.
 -> les résiduels marquent la saisonalité: fitter deux modèles distinct, prédire sur les deux.
+```{r}
+tr = decomp$trend
+osci = decomp$seasonal
+#on fit un modèle linéaire sur la tendance:
+reg = lm((1:length(df$V1))~tr)
+plot(reg)
+
+#Le bruit aléatoire (résiduel) montre que nous sommes dans un cas d'homoscedasticité, le modèle est donc adapté à l'apprentissage de cette tendance
+
+
+```
 
 
 
